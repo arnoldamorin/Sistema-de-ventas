@@ -10,25 +10,6 @@ $pg = "Listado de clientes";
 $venta = new Venta();
 $aVentas =$venta->obtenerTodos();
 
-function nombreCliente($fk){
-  $cliente = new Cliente();
-  $aCliente = $cliente->obtenerTodos();
-  foreach ($aCliente as $elemento):
-    if($fk == $elemento->idcliente){
-      echo $elemento->nombre;
-    }  
-  endforeach;
-}
-function nombreProducto($fk){
-  $producto = new Producto();
-  $aProducto = $producto->obtenerTodos();
-  foreach ($aProducto as $elemento):
-    if($fk == $elemento->idproducto){
-      echo $elemento->nombre;
-    }    
-  endforeach;
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,12 +28,11 @@ function nombreProducto($fk){
 <!-- Page Wrapper -->
 <div id="wrapper">
     <?php include 'menu.php';?>
-    <div class=form>
         <div class="container-fluid">
 
         <!-- Page Heading -->
         <h1 class="h3 mb-4 text-gray-800">Listado de ventas</h1>
-        <a href="cliente-formulario.php" class="btn btn-primary mr-2">Nuevo</a>
+        <a href="venta-formulario.php" class="btn btn-primary mr-2">Nuevo</a>
             <table class="table table-hover">           
                     <tr>
                         <th>Fecha</th>
@@ -64,17 +44,16 @@ function nombreProducto($fk){
                     </tr>        
                     <?php foreach ($aVentas as $elemento):?>
                         <tr>                           
-                        <td><?php echo $elemento->fecha;?></td>
+                        <td><?php echo date_format(date_create($elemento->fecha),"d-m-Y H:i:s");?></td>
                         <td><?php echo $elemento->cantidad;?></td>
-                        <td><?php nombreProducto($elemento->fk_idproducto);?></td>
-                        <td><?php nombreCliente($elemento->fk_idcliente);?></td>                          
+                        <td><?php echo $elemento->nombre_producto;?></td>
+                        <td><?php echo $elemento->nombre_cliente;?></td>                          
                         <td><?php echo $elemento->total;?></td>                          
                         <td>
                             <a href="venta-formulario.php?id=<?php echo $elemento->idventa; ?>"><i class="fas fa-search"style="color:blue"></i></a></td>                                                
                     </tr>  
                     <?php endforeach;?>                
-                </table>
-    </div>
+                </table>    
 </div>
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>

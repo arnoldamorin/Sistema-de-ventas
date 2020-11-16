@@ -1,3 +1,12 @@
+<?php
+
+include_once "entidades/config.php";
+include_once "entidades/tipoproducto.php";
+$pg = "Listado de clientes";
+
+$tipoproducto = new Tipoproducto();
+$atipoproducto =$tipoproducto->obtenerTodos();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,8 +34,12 @@
                     <th>Acciones</th>                                    
                 </tr>        
                 <tr>
-                    <td></td>                         
-                    <td><i class="fas fa-search"style="color:blue"></i></td>           
+                <?php foreach ($atipoproducto as $entidad):?>
+                    <tr>                        
+                        <td><?php echo $entidad->nombre;?></td>                          
+                        <td><a href="tipoproducto-formulario.php?id=<?php echo $entidad->idtipoproducto; ?>"><i class="fas fa-search"style="color:blue"></i></a></td>                                                
+                    </tr>  
+                <?php endforeach;?>           
             </table>  
         </div>
 </div>

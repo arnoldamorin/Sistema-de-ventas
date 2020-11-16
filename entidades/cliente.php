@@ -24,7 +24,7 @@
             $this->cuit = isset($request["txtCuit"])? $request["txtCuit"] : "";
             $this->telefono = isset($request["txtTelefono"])? $request["txtTelefono"] : "";
             $this->correo = isset($request["txtCorreo"])? $request["txtCorreo"] : "";
-            $this->Fecha_nac = isset($request["txtFechaNac"])? $request["txtFechaNac"] : "";
+            $this->fecha_nac = isset($request["txtFechaNac"])? $request["txtFechaNac"] : "";
         }
 
         public function insertar(){
@@ -57,13 +57,13 @@
         public function actualizar(){
             $mysqli = new mysqli(config::BBDD_HOST, config::BBDD_USUARIO, config::BBDD_CLAVE, config::BBDD_NOMBRE);
             //Arma la query
-            $sql = "UPDATE clientes SET(
+            $sql = "UPDATE clientes SET
                 nombre = '".$this->nombre."',
-                cuit = '" . $this->cuit ."',
-                telefono = '" . $this->telefono ."',
-                correo = '" . $this->correo ."',
-                fecha_nac = '" . $this->fecha_nac ."'
-                WHERE idcliente ='" .$this->idcliente;
+                cuit = '" .$this->cuit."',
+                telefono = '" .$this->telefono."',
+                correo = '" .$this->correo."',
+                fecha_nac = '" .$this->fecha_nac."'
+                WHERE idcliente =" .$this->idcliente;
             
             if (!$mysqli->query($sql)){
                 printf("Error en query: %s\n", $mysqli->error . " " .$sql);
@@ -100,7 +100,7 @@
                 $this->cuit = $fila["cuit"];
                 $this->telefono = $fila["telefono"];
                 $this->correo = $fila["correo"];
-                $this->Fecha_nac = $fila["fecha_nac"];
+                $this->fecha_nac = $fila["fecha_nac"];
             }
             $mysqli->close();  
         }

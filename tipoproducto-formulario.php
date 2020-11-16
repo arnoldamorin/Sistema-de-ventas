@@ -2,7 +2,7 @@
 
 include_once "entidades/config.php";
 include_once "entidades/tipoproducto.php";
-$pg = "Edición de tipo producto";
+
 
 $tipoproducto = new Tipoproducto();
 $tipoproducto->cargarFormulario($_REQUEST);
@@ -22,6 +22,13 @@ if($_POST){
     }
         
 }
+
+if(isset($_GET["id"]) && $_GET["id"] > 0 ){
+    $tipoproducto->id = $_GET["id"];
+    $tipoproducto->obtenerPorId();
+   
+   
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -40,14 +47,14 @@ if($_POST){
 <!-- Page Wrapper -->
 <div id="wrapper">
     <?php include 'menu.php';?>
-    <<form method="post" enctype="multipart/form-data" action="">
+    <form method="post" enctype="multipart/form-data" action="">
         <div class="container-fluid">
             <!-- Page Heading -->
             <h1 class="h3 mb-4 text-gray-800">Tipo de productos</h1>
             <div class="row">
                 <div class="col-12 mb-3">
                     <a href="tipoproductos.php" class="btn btn-primary mr-2">Listado</a>
-                    <a href="" class="btn btn-primary mr-2">Nuevo</a>
+                    <a href="tipoproducto-formulario.php" class="btn btn-primary mr-2">Nuevo</a>
                     <button type="submit" class="btn btn-success mr-2" id="btnGuardar" name="btnGuardar">Guardar</button>
                     <button type="submit" class="btn btn-danger" id="btnBorrar" name="btnBorrar">Borrar</button>
                 </div>
@@ -55,7 +62,7 @@ if($_POST){
             <div class="row">
                 <div class="col-12 form-group">
                     <label for="txtNombre">Nombre:</label>
-                    <input type="text" required="" class="form-control" name="txtNombre" id="txtNombre" value="">
+                    <input type="text" required="" class="form-control" name="txtNombre" id="txtNombre" value="<?php echo $tipoproducto->nombre?>">
                 </div>     
             </div>
         </div>        
