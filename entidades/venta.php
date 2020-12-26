@@ -64,7 +64,7 @@
         public function actualizar(){
             $mysqli = new mysqli(config::BBDD_HOST, config::BBDD_USUARIO, config::BBDD_CLAVE, config::BBDD_NOMBRE);
             //Arma la query
-            $sql = "UPDATE ventas SET(
+            $sql = "UPDATE ventas SET
                 fk_idcliente = '" . $this->fk_idcliente ."',
                 fk_idproducto = '" . $this->fk_idproducto ."',
                 fecha = '".$this->fecha."',
@@ -154,30 +154,17 @@
             
             
         }
-        public function ActualizarStock(){
-            $mysqli = new mysqli(config::BBDD_HOST, config::BBDD_USUARIO, config::BBDD_CLAVE, config::BBDD_NOMBRE);            
-          
-            $nuevaCantidad = $fila["cantidad"]-1;
-            $sql = "UPDATE productos SET(               
-                    cantidad = '" . $nuevaCantidad ."'                
-                    WHERE idproducto = ".$this->fk_idproducto;                     
+        public function actualizarStock(){
+            $mysqli = new mysqli(config::BBDD_HOST, config::BBDD_USUARIO, config::BBDD_CLAVE, config::BBDD_NOMBRE);
+            //Arma la query
+            $sql = "UPDATE productos SET                
+                cantidad = cantidad -'" . $this->cantidad ."',                
+                WHERE idproducto = ".$this->fk_idproducto;            
             if (!$mysqli->query($sql)){
                 printf("Error en query: %s\n", $mysqli->error . " " .$sql);
-            }  
-            
-            $resultado = $mysqli->query($sql);
-            if ($fila = $resultado->fetch_assoc()){
-                $this->idventa = $fila["idventa"];
-                $this->fk_idcliente = $fila["fk_idcliente"];
-                $this->fk_idproducto =$fila["fk_idproducto"];
-                $this->fecha = $fila["fecha"];
-                $this->cantidad = $fila["cantidad"];
-                $this->preciounitario = $fila["preciounitario"];
-                $this->total = $fila["total"];                
-            }
-            $mysqli->close();  
+            }                     
+            $mysqli->close();
         }
-        
     }
 
 ?>

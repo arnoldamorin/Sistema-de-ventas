@@ -1,12 +1,12 @@
 <?php 
-include_once"config.php";
-include_once"entidades/usuario.php";
+include_once "entidades/config.php";
+include_once "entidades/usuario.php";
 
 $usuario = new Usuario();
-$usuario->usuario = "ntarche";
-$usuario->clave = $usuario->encriptarClave("admin123");
-$usuario->nombre = "Nelson Daniel";
-$usuario->apellido = "Tarche";
-$usuario->correo = "nelson.tarche@gmail.com";
+$usuario->usuario = "arnoldsango";
+$usuario->clave = $usuario->encriptarClave("1234");
+$usuario->nombre = "Arnold";
+$usuario->apellido = "Amorin";
+$usuario->correo = "aamorin.ar@gmail.com";
 $usuario->insertar();
 ?>

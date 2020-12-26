@@ -70,7 +70,6 @@ if(isset($_GET["id"]) && $_GET["id"] > 0 ){
         <?php include 'menu.php';?>
         <form method="post" enctype="multipart/form-data" action="">
             <div class="container-fluid">
-
                 <!-- Page Heading -->
                 <h1 class="h3 mb-4 text-gray-800">Cliente</h1>
                 <div class="row">
@@ -109,13 +108,62 @@ if(isset($_GET["id"]) && $_GET["id"] > 0 ){
                             value="<?php echo isset($_GET["id"]) ? $cliente->correo:"" ?>">
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-table"></i> Domicilios
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                        data-target="#modalDomicilio">Agregar</button>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div id="grilla_wrapper" class="dataTables_wrapper no-footer">
+                                    <div id="grilla_processing" class="dataTables_processing" style="display: none;">
+                                        Processing...</div>
+                                    <table id="grilla" class="display dataTable no-footer" style="width: 98%;"
+                                        role="grid" aria-describedby="grilla_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting_asc" tabindex="0" aria-controls="grilla" rowspan="1"
+                                                    colspan="1" aria-label="Tipo: activate to sort column descending"
+                                                    aria-sort="ascending" style="width: 252px;">Tipo</th>
+                                                <th class="sorting" tabindex="0" aria-controls="grilla" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Provincia: activate to sort column ascending"
+                                                    style="width: 393px;">Provincia</th>
+                                                <th class="sorting" tabindex="0" aria-controls="grilla" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Localidad: activate to sort column ascending"
+                                                    style="width: 409px;">Localidad</th>
+                                                <th class="sorting" tabindex="0" aria-controls="grilla" rowspan="1"
+                                                    colspan="1"
+                                                    aria-label="Dirección: activate to sort column ascending"
+                                                    style="width: 398px;">Dirección</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="odd">
+                                                <td valign="top" colspan="4" class="dataTables_empty">No data available
+                                                    in table</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="dataTables_info" id="grilla_info" role="status" aria-live="polite">
+                                        Showing 0 to 0 of 0 entries</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
         <div class="row">
             <div class="col-12">
                 <?php if ($eliminacion) {?>
                 <div class="alert alert-danger" role="alert">
-                    <strong>Cliente eliminado con exito!</strong>                     
+                    <strong>Cliente eliminado con exito!</strong>
                 </div>
                 <?php $eliminacion=false; } ?>
             </div>

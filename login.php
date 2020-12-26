@@ -1,15 +1,28 @@
 <?php
 //Comprobamos que el usuario sea admin y la clave sea admin123
+include_once "entidades/usuario.php";
+
+session_start();
 if($_POST){
   $usuario = trim($_POST["txtUsuario"]);
   $clave = trim($_POST["txtClave"]);
+
+
+  $aUsuario = new Usuario();
+  $aUsuario->usuario = $usuario;
+  $aUsuario->obtenerPorUsuario();
+
+  if($aUsuario->verificarClave($clave,$aUsuario->clave)){
+    $_SESSION["nombre"] = $aUsuario->nombre;
+    header("location:index.php");
+  }else{
+    $msg = "Usuario o clave incorrecto";  
+  }
 }
 
-
-$claveEncriptada = password_hash("admin1234",PASSWORD_DEFAULT);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -49,12 +62,12 @@ $claveEncriptada = password_hash("admin1234",PASSWORD_DEFAULT);
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                   </div>
-                  <form class="user">
+                  <form method="post" enctype="multipart/form-data" action="">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input type="text" class="form-control form-control-user" id="txtUsuario" name="txtUsuario"placeholder="Usuario">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" class="form-control form-control-user" id="txtClave" name="txtClave"placeholder="Contraseña">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
@@ -62,9 +75,9 @@ $claveEncriptada = password_hash("admin1234",PASSWORD_DEFAULT);
                         <label class="custom-control-label" for="customCheck">Remember Me</label>
                       </div>
                     </div>
-                    <a href="index.html" class="btn btn-primary btn-user btn-block">
+                    <button type="submit" class="btn btn-primary btn-user btn-block">
                       Login
-                    </a>
+                    </button>
                     <hr>
                     <a href="index.html" class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> Login with Google
@@ -80,6 +93,11 @@ $claveEncriptada = password_hash("admin1234",PASSWORD_DEFAULT);
                   <div class="text-center">
                     <a class="small" href="register.html">Create an Account!</a>
                   </div>
+                  <?php if (isset($msg)){  ?>
+                  <div class="alert alert-danger" role="alert">
+                     Clave o usuario incorrecto
+                  </div>
+                  <?php } ?>
                 </div>
               </div>
             </div>

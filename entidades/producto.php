@@ -26,11 +26,12 @@
             $this->fk_idtipoproducto = isset($request["lstTipoProducto"])? $request["lstTipoProducto"] : "";
             $this->cantidad = isset($request["txtCantidad"])? $request["txtCantidad"] : "";
             $this->precio = isset($request["txtPrecio"])? $request["txtPrecio"] : "";
-           /* $this->descripcion = isset($request["txtDescripcion"])? $request["txtDescripcion"] : "";            */
+            $this->imagen = isset($request["archivo"])? $request["archivo"] : "";
+           /*$this->descripcion = isset($request["txtDescripcion"])? $request["txtDescripcion"] : "";            */
         }
         //Instancia la clase myqli con el constructor parametrizado 
             /*despues de precio pa vesto gg
-             '" . $this->descripcion ."'             
+                        
                 '" . $this->imagen ."'           descripcion,
                 imagen  */   
         public function insertar(){
@@ -41,12 +42,14 @@
                 nombre,
                 cantidad,
                 precio,
-                fk_idtipoproducto              
+                fk_idtipoproducto,
+                imagen             
                 ) VALUES (               
                 '" . $this->nombre ."',
                 '" . $this->cantidad ."',
                 '" . $this->precio ."',               
-                '" . $this->fk_idtipoproducto ."'
+                '" . $this->fk_idtipoproducto ."',
+                '" . $this->imagen ."' 
                 );";
                 //print_r($sql);exit;
             //Ejecuta la query
@@ -61,11 +64,11 @@
         public function actualizar(){
             $mysqli = new mysqli(config::BBDD_HOST, config::BBDD_USUARIO, config::BBDD_CLAVE, config::BBDD_NOMBRE);
             //Arma la query
-            $sql = "UPDATE productos SET(
-                nombre = '".$this->nombre."'
-                cantidad = '" . $this->cantidad ."'
-                precio = '" . $this->precio ."'
-                descripcion = '" . $this->descripcion ."'
+            $sql = "UPDATE productos SET
+                nombre = '".$this->nombre."',
+                cantidad = '" . $this->cantidad ."',
+                precio = '" . $this->precio ."', 
+                fk_idtipoproducto = '" . $this->fk_idtipoproducto ."',
                 imagen = '" . $this->imagen ."'             
                 WHERE idproducto = ".$this->idproducto;
             
@@ -136,10 +139,7 @@
                     $aResultado[] = $entidadAux;
                 }
                 return $aResultado;
-            }
-            
-            
-        }
-         
+            }         
+        }                  
     }
 ?>

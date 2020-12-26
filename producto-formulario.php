@@ -9,24 +9,34 @@ $aTipoProducto =$tipoproducto->obtenerTodos();
 
 $producto = new Producto();
 $producto->cargarFormulario($_REQUEST);
-
+$nombreImagen ="";
 if($_POST){
-   /* if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK){
+   if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK){
         $nombreAleatorio = date("Ymdhmsi");
         $archivo_tmp = $_FILES["archivo"]["tmp_name"];
         $nombreArchivo = $_FILES["archivo"]["name"];
         $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
         $nombreImagen = $nombreAleatorio . "." . $extension;
         move_uploaded_file($archivo_tmp, "archivos/$nombreImagen");
-    }*/
-
+    }
+    
     if(isset($_POST["btnGuardar"])){
         if(isset($_GET["id"]) && $_GET["id"] > 0){
             //actualizo un producto existente
+            if($nombreImagen != "" && $producto->imagen != "") {    
+                //si se sube una imagen y hay una imagen previa entonces eliminarla.
+                unlink("archivos/".$producto->imagen);
+            }      
+            if($nombreImagen == ""){
+                //si la persona no sube ninguna imagen, conservar la imagen que tenia previamente
+                $nombreImagen = $producto->imagen;
+            }
+            $producto->imagen = $nombreImagen;
             $producto->actualizar();
         } else {
             //Es nuevo
-            $producto->insertar();
+            $producto->imagen = $nombreImagen;
+            $producto->insertar();            
         }        
     } else if(isset($_POST["btnBorrar"])){     
         $producto->eliminar();
@@ -83,14 +93,15 @@ if(isset($_GET["id"]) && $_GET["id"] > 0 ){
                         <select class="form-control selectpicker" id="lstTipoProducto" name="lstTipoProducto"
                             data-live-search="true" value="">
                             <option class="dropdown-item" disabled selected>Seleccionar</option>
-                            <?php foreach ($aTipoProducto as $elemento):  ?>  
-                                <?php if(isset($_GET["id"]) && $_GET["id"] > 0  && $elemento->idtipoproducto == $producto->fk_idtipoproducto){?>                              
-                                    <option value="<?php echo $elemento->idtipoproducto?>" selected>
-                                        <?php echo $elemento->nombre;?></option>
-                                <?php }else {?>                                                               
-                                        <option value="<?php echo $elemento->idtipoproducto?>"><?php echo $elemento->nombre;?></option>
-                                        <?php }?>
-                                <?php endforeach;?>
+                            <?php foreach ($aTipoProducto as $elemento):  ?>
+                            <?php if(isset($_GET["id"]) && $_GET["id"] > 0  && $elemento->idtipoproducto == $producto->fk_idtipoproducto){?>
+                            <option value="<?php echo $elemento->idtipoproducto?>" selected>
+                                <?php echo $elemento->nombre;?></option>
+                            <?php }else {?>
+                            <option value="<?php echo $elemento->idtipoproducto?>"><?php echo $elemento->nombre;?>
+                            </option>
+                            <?php }?>
+                            <?php endforeach;?>
                         </select>
                     </div>
                     <div class="col-6 form-group">
@@ -102,6 +113,12 @@ if(isset($_GET["id"]) && $_GET["id"] > 0 ){
                         <label for="txtPrecio">Precio:</label>
                         <input type="number" class="form-control" name="txtPrecio" id="txtPrecio"
                             value="<?php echo isset($_GET["id"]) ? $producto->precio: ""?>">
+                    </div>
+                    <div class="form-group">
+                        <h5>Imagen</h5>
+                        <label for="ejemplo_archivo_1"></label>
+                        <input type="file" name="archivo" id="archivo" class="form-control shadow p-1"
+                            value="<?php echo $nombreImagen?>">
                     </div>
                 </div>
         </form>

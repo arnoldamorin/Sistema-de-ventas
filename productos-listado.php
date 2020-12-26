@@ -39,7 +39,7 @@ $aProductos =$producto->obtenerTodos();
                             </tr>        
                             <?php foreach ($aProductos as $elemento):?>
                                 <tr>                           
-                                    <td><?php echo $elemento->imagen;?></td>
+                                    <th><img class="img-thumbnail" style="height: 70px" src="archivos/<?php echo $elemento->imagen;?>"></th>
                                     <td><?php echo $elemento->nombre;?></td>
                                     <td><?php echo $elemento->cantidad;?></td>
                                     <td><?php echo $elemento->precio;?></td>                          
