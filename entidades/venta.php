@@ -151,7 +151,7 @@
                 }
                 return $aResultado;
             }
-            
+            $mysqli->close();            
             
         }
         public function actualizarStock(){
@@ -164,6 +164,20 @@
                 printf("Error en query: %s\n", $mysqli->error . " " .$sql);
             }                     
             $mysqli->close();
+        }
+        public function obtenerFacturacionMensual($mes){
+            $mysqli = new mysqli(config::BBDD_HOST, config::BBDD_USUARIO, config::BBDD_CLAVE, config::BBDD_NOMBRE);  
+            $sql = "SELECT sum(total) as totalmes                        
+                    FROM ventas  
+                    WHERE EXTRACT (MONTH FROM fecha) = '$mes'";
+            if (!$mysqli->query($sql)){
+                printf("Error en query: %s\n", $mysqli->error . " " .$sql);             
+            }          
+            /*$resultado = $mysqli->query($sql);
+            if ($fila = $resultado->fetch_assoc()){
+                $this->totalmes = $fila["totalmes"];                
+            } */        
+            $mysqli->close();         
         }
     }
 

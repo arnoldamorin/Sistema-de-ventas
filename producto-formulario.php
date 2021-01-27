@@ -40,6 +40,8 @@ if($_POST){
         }        
     } else if(isset($_POST["btnBorrar"])){     
         $producto->eliminar();
+        header('Location:productos-listado.php');
+        exit();
     }
         
 }
