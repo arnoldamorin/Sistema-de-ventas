@@ -48,8 +48,7 @@ if ($_POST) {
         } else {
             $producto->eliminar();
             $mensajeSuccess = "Producto eliminado correctamente";
-            sleep(5);
-            header('Location:productos-listado.php');
+           
         }
     }
 }
