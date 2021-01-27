@@ -20,7 +20,7 @@
         }
         public function __set($atributo, $valor){
             return $this->$atributo = $valor;
-            return this;
+            
         }
         public function cargarFormulario($request){
             $this->idventa = isset($request["id"])? $request["id"] : "";            
@@ -167,18 +167,32 @@
         }
         public function obtenerFacturacionMensual($mes){
             $mysqli = new mysqli(config::BBDD_HOST, config::BBDD_USUARIO, config::BBDD_CLAVE, config::BBDD_NOMBRE);  
-            $sql = "SELECT sum(total) as totalmes                        
+            $sql = "SELECT sum(total) AS totalmes                        
                     FROM ventas  
-                    WHERE EXTRACT (MONTH FROM fecha) = '$mes'";
+                    WHERE MONTH(fecha) = $mes";
             if (!$mysqli->query($sql)){
                 printf("Error en query: %s\n", $mysqli->error . " " .$sql);             
-            }          
-            /*$resultado = $mysqli->query($sql);
-            if ($fila = $resultado->fetch_assoc()){
-                $this->totalmes = $fila["totalmes"];                
-            } */        
-            $mysqli->close();         
+            } 
+            $resultado = $mysqli->query($sql);         
+            $fila = $resultado->fetch_assoc();
+            return $fila["totalmes"];                
+            
+                  
         }
+        public function obtenerFacturacionAnual($anio){
+            $mysqli = new mysqli(config::BBDD_HOST, config::BBDD_USUARIO, config::BBDD_CLAVE, config::BBDD_NOMBRE);  
+            $sql = "SELECT sum(total) AS totalanio                        
+                    FROM ventas  
+                    WHERE YEAR(fecha) = $anio";
+            if (!$mysqli->query($sql)){
+                printf("Error en query: %s\n", $mysqli->error . " " .$sql);             
+            } 
+            $resultado = $mysqli->query($sql);         
+            $fila = $resultado->fetch_assoc();
+            return $fila["totalanio"];                
+                  
+        }
+        
     }
 
 ?>

@@ -33,17 +33,25 @@ if($_POST){
             }
             $producto->imagen = $nombreImagen;
             $producto->actualizar();
+            $mensajeSuccess ="Producto actualizado correctamente";
         } else {
             //Es nuevo
             $producto->imagen = $nombreImagen;
-            $producto->insertar();            
+            $producto->insertar();    
+            $mensajeSuccess ="Producto guardado correctamente";        
         }        
-    } else if(isset($_POST["btnBorrar"])){     
-        $producto->eliminar();
-        header('Location:productos-listado.php');
-        exit();
-    }
-        
+    } else if(isset($_POST["btnBorrar"])){   
+        $total = $producto->obtenerProductosVendidos($producto->idproducto);
+        if ($total > 0){
+            $mensajeError = "No se pueden eliminar productos con ventas asociadadas";
+
+        } else {
+            $producto->eliminar();
+            $mensajeSuccess = "Producto eliminado correctamente";
+            sleep(5);
+            header('Location:productos-listado.php');
+        }         
+    }        
 }
 if(isset($_GET["id"]) && $_GET["id"] > 0 ){
     $producto->id = $_GET["id"];
@@ -124,6 +132,14 @@ if(isset($_GET["id"]) && $_GET["id"] > 0 ){
                     </div>
                 </div>
         </form>
+        <?php if (isset($mensajeSuccess)) {?>
+            <div class="alert alert-success" role="alert"><?= $mensajeSuccess ?></div>    
+        
+        <?php }  ?>
+        <?php if (isset($mensajeError)) {?>
+            <div class="alert alert-danger col-6"  role="alert"><?= $mensajeError ?></div>    
+        
+        <?php }  ?>
     </div>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
