@@ -145,7 +145,7 @@
             $mysqli = new mysqli(config::BBDD_HOST, config::BBDD_USUARIO, config::BBDD_CLAVE, config::BBDD_NOMBRE);  
             $sql = "SELECT count(V.fk_idproducto) AS totalproducto                      
                     FROM productos P inner join Ventas V on V.fk_idproducto = P.idproducto
-                    WHERE idproducto = $id";
+                    WHERE P.idproducto = $id";
                     
             if (!$mysqli->query($sql)){
                 printf("Error en query: %s\n", $mysqli->error . " " .$sql);             

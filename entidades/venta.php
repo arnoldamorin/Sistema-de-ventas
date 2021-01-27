@@ -129,7 +129,8 @@
                             V.total                         
                     FROM ventas V 
                     inner join clientes C ON V.fk_idcliente = C.idcliente 
-                    inner join productos P ON P.idproducto = V.fk_idproducto";          
+                    inner join productos P ON P.idproducto = V.fk_idproducto
+                    ORDER BY V.fecha";          
            
             $resultado = $mysqli->query($sql);
          
